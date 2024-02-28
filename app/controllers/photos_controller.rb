@@ -1,15 +1,20 @@
 class PhotosController < ApplicationController
   before_action :set_photo, only: %i[ show edit update destroy ]
-  before_action :ensure_current_user_is_owner, only: [:destroy, :update, :edit]
-  before_action :ensure_user_is_authorized, only: [:show]
   before_action { authorize @photo || Photo }
+  #are now in policy
+  # before_action :ensure_current_user_is_owner, only: [:destroy, :update, :edit]
+  # before_action :ensure_user_is_authorized, only: [:show]
+  # before_action { authorize @photo || Photo }
   # GET /photos or /photos.json
+
+  
   def index
     @photos = Photo.all
   end
 
   # GET /photos/1 or /photos/1.json
   def show
+    authorize @photo
   end
   
   # GET /photos/new
@@ -19,6 +24,7 @@ class PhotosController < ApplicationController
 
   # GET /photos/1/edit
   def edit
+    # authorize @photo
   end
 
   # POST /photos or /photos.json
@@ -39,6 +45,7 @@ class PhotosController < ApplicationController
 
   # PATCH/PUT /photos/1 or /photos/1.json
   def update
+    # authorize @photo
     respond_to do |format|
       if @photo.update(photo_params)
         format.html { redirect_to @photo, notice: "Photo was successfully updated." }
@@ -52,6 +59,7 @@ class PhotosController < ApplicationController
 
   # DELETE /photos/1 or /photos/1.json
   def destroy
+    # authorize @photo
     if current_user == @photo.owner
     @photo.destroy
     respond_to do |format|
@@ -73,11 +81,11 @@ class PhotosController < ApplicationController
         redirect_back fallback_location: root_url, alert: "You're not authroized for that."
       end
     end
-    def ensure_user_is_authorized
-      if !PhotoPolicy.new(current_user, @photo).show?
-        raise Pundit::NotAuthorizedError, "not allowed"
-      end
-    end
+    # def ensure_user_is_authorized
+    #   if !PhotoPolicy.new(current_user, @photo).show?
+    #     raise Pundit::NotAuthorizedError, "not allowed" #this raises an alert if the user is not authorized
+    #   end
+    # end
 
     # Only allow a list of trusted parameters through.
     def photo_params

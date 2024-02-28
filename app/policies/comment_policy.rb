@@ -1,6 +1,8 @@
 class CommentPolicy < ApplicationPolicy
   def destroy?
-    user.admin? or record.user == user
+    user.present? && (record.author == user || user.admin?)
+  end
+  def create?
+    user.present?
   end
 end
-
