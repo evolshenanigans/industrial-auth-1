@@ -15,9 +15,7 @@ class PhotoPolicy < ApplicationPolicy
     edit?
     
   end
-  # def create?
-  #   user
-  # end
+ 
   def update? 
     edit?
   end

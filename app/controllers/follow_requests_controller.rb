@@ -23,7 +23,6 @@ class FollowRequestsController < ApplicationController
 
   # POST /follow_requests or /follow_requests.json
   def create
-    # authorize @follow_request || FollowRequest
     @follow_request = FollowRequest.new(follow_request_params)
     @follow_request.sender = current_user
 
@@ -53,7 +52,6 @@ class FollowRequestsController < ApplicationController
 
   # DELETE /follow_requests/1 or /follow_requests/1.json
   def destroy
-    authorize @follow_request
     @follow_request.destroy
     respond_to do |format|
       format.html { redirect_back fallback_location: root_url, notice: "Follow request was successfully destroyed." }
