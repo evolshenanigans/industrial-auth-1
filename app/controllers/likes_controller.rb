@@ -5,9 +5,6 @@ class LikesController < ApplicationController
   def index
     @likes = Like.all
   end
-  def liked
-    @photos = @user.liked_photos
-  end
 
   # GET /likes/1 or /likes/1.json
   def show
