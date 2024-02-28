@@ -17,5 +17,8 @@ class UserPolicy
   def discover?
     true
   end
+  def liked?
+    true
+  end
   
 end
