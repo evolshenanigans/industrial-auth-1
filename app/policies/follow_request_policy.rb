@@ -13,5 +13,9 @@ class FollowRequestPolicy < ApplicationPolicy
   def destroy?
     user.present?
   end
+ 
+  def update?
+    user.present?
+  end
 
 end
